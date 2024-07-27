@@ -5,9 +5,6 @@ from . import app, db
 
 class InvalidAPIUsage(Exception):
     """Класс исключения для API.
-    Attributes:
-    status_code: статус-код для ответа API
-    message: текст сообщения об ошибки, передается при вызове исключения
     """
 
     status_code = 400
@@ -26,7 +23,6 @@ class InvalidAPIUsage(Exception):
 @app.errorhandler(InvalidAPIUsage)
 def api_usage(error):
     """Обработчик исключения для API.
-    Возвращает в ответе текст ошибки в формате JSON и статус-код.
     """
     return jsonify(error.to_dict()), error.status_code
 

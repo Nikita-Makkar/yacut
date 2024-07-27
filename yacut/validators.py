@@ -2,12 +2,21 @@ import re
 
 from wtforms.validators import ValidationError
 
+from yacut.constants import (ERROR_SHORT_ID_LENGTH,
+                             SHORT_ID_PATTERN,
+                             ERROR_CHARACTERS
+                             )
+
 
 def validate_short_url(form, field):
     short_url = field.data
     if short_url:
         if len(short_url) > 16:
-            raise ValidationError('Короткая ссылка не может быть длиннее 16 символов.')
+            raise ValidationError(
+                ERROR_SHORT_ID_LENGTH
+            )
 
-        if not re.match(r'^[A-Za-z0-9]+$', short_url):
-            raise ValidationError('Короткая ссылка может содержать только латинские буквы и цифры.')
+        if not re.match(SHORT_ID_PATTERN, short_url):
+            raise ValidationError(
+                ERROR_CHARACTERS
+            )
