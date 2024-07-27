@@ -26,7 +26,7 @@ def get_url(short_id):
 def add_url():
     if request.content_type != 'application/json':
         raise InvalidAPIUsage(ERROR_MISSING_BODY, 400)
-    data = request.get_json()
+    data = request.get_json(silent=True)
     if not data:
         raise InvalidAPIUsage(ERROR_MISSING_BODY, 400)
     if not data or 'url' not in data:

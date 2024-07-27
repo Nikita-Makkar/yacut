@@ -1,6 +1,7 @@
 from flask import flash, redirect, render_template
 
 from . import app, db
+from .constants import ERROR_SHORT_ID_EXISTS
 from .forms import URLForm
 from .models import URLMap
 from .utils import generate_random_string
@@ -17,7 +18,7 @@ def index_view():
         if short_url:
             url_map = URLMap.query.filter_by(short=short_url).first()
             if url_map:
-                flash('Предложенный вариант короткой ссылки уже существует.')
+                flash(ERROR_SHORT_ID_EXISTS)
                 return render_template(
                     'index.html',
                     form=form,
