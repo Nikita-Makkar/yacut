@@ -1,9 +1,9 @@
 from datetime import datetime
+from urllib.parse import urljoin
+
+from flask import request
 
 from yacut import db
-
-from flask import jsonify, request
-from urllib.parse import urljoin
 
 
 class URLMap(db.Model):
@@ -12,12 +12,8 @@ class URLMap(db.Model):
     short = db.Column(db.String(16), unique=True, nullable=False)
     timestamp = db.Column(db.DateTime, index=True, default=datetime.utcnow)
 
-
     def to_dict(self):
-        return {
-            'url': self.original,
-            'short_link': urljoin(request.url_root, self.short)
-        }
+        return {'url': self.original, 'short_link': urljoin(request.url_root, self.short)}
 
     def from_dict(self, data):
         for field in ['original', 'short']:

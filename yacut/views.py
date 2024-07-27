@@ -32,10 +32,9 @@ def index_view():
             db.session.add(url_map)
             db.session.commit()
             generated_short_url = short_url
-        #
-        # flash(f'Короткая ссылка: {generated_short_url}')
         return render_template('index.html', form=form, generated_short_url=generated_short_url)
     return render_template('index.html', form=form, generated_short_url=None)
+
 
 @app.route('/<short_id>')
 def redirect_to_original(short_id):

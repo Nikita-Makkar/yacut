@@ -32,8 +32,7 @@ def add_url():
         if len(custom_id) > 16:
             raise InvalidAPIUsage('Указано недопустимое имя для короткой ссылки', 400)
         if not re.match(r'^[A-Za-z0-9]+$', custom_id):
-            raise InvalidAPIUsage(
-                'Указано недопустимое имя для короткой ссылки',400)
+            raise InvalidAPIUsage('Указано недопустимое имя для короткой ссылки', 400)
         if URLMap.query.filter_by(short=custom_id).first() is not None:
             raise InvalidAPIUsage('Предложенный вариант короткой ссылки уже существует.', 400)
     else:
@@ -43,4 +42,3 @@ def add_url():
     db.session.add(url)
     db.session.commit()
     return jsonify(url.to_dict()), 201
-
