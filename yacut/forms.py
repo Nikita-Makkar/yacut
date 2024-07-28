@@ -6,7 +6,7 @@ from .validators import validate_short_url
 
 
 class URLForm(FlaskForm):
-    original = StringField(
+    original_link = StringField(
         'Длинная ссылка',
         validators=[DataRequired(message='Обязательное поле'),
                     Length(1, 256)]

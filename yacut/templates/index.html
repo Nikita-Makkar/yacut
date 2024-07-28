@@ -8,13 +8,42 @@
     </p>
 
     <div class="container">
-      <div class="row my-3">
-        <div class="col-sm">
-        </div>
-        <div class="col-sm">
-          {% include 'includes/add.html' %}
-        </div>
-        <div class="col-sm">
+      <div class="row justify-content-center my-3">
+        <div class="col-10 col-md-8 my-5">
+          <form method="POST" novalidate>
+            {{ form.csrf_token }}
+            {{ form.original_link(class="form-control form-control-lg py-2 mb-3", placeholder=form.original_link.label.text) }}
+            {% if form.original_link.errors %}
+              <p class="text-danger">
+                {% for error in form.original_link.errors %}
+                  {{ error }}
+                {% endfor %}
+              </p>
+            {% endif %}
+            {{ form.short(class="form-control form-control-lg py-2 mb-3", placeholder=form.short.label.text) }}
+            {% if form.short.errors %}
+              <p class="text-danger">
+                {% for error in form.short.errors %}
+                  {{ error }}
+                {% endfor %}
+              </p>
+            {% endif %}
+            {{ form.submit(class="btn btn-primary px-5 py-3") }}
+          </form>
+          <p class="py-3 mb-3">
+            {% with messages = get_flashed_messages() %}
+              {% if messages %}
+                <div class="alert alert-warning">
+                  {% for message in messages %}
+                    {{ message }}
+                  {% endfor %}
+                </div>
+              {% endif %}
+            {% endwith %}
+          </p>
+          {% if generated_short_url %}
+            <p>Ваша новая ссылка готова: <a href="{{ url_for('redirect_to_original', short_id=generated_short_url, _external=True) }}">{{ url_for('redirect_to_original', short_id=generated_short_url, _external=True) }}</a></p>
+          {% endif %}
         </div>
       </div>
     </div>

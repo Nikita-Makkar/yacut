@@ -12,7 +12,7 @@ def index_view():
     form = URLForm()
     generated_short_url = None
     if form.validate_on_submit():
-        original_url = form.original.data
+        original_url = form.original_link.data
         short_url = form.short.data
 
         if short_url:
