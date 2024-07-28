@@ -11,7 +11,7 @@ class URLForm(FlaskForm):
         validators=[DataRequired(message='Обязательное поле'),
                     Length(1, 256)]
     )
-    short = StringField(
+    custom_id = StringField(
         'Ваш вариант короткой ссылки',
         validators=[Length(1, 16), Optional(), validate_short_url]
     )

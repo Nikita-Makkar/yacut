@@ -3,7 +3,7 @@ from urllib.parse import urljoin
 
 from flask import request
 
-from yacut import db
+from . import db
 
 
 class URLMap(db.Model):
