@@ -25,18 +25,33 @@ def get_url(short_id):
 def add_url():
     data = request.get_json(silent=True)
     if not data:
-        raise InvalidAPIUsage(ERROR_MISSING_BODY, HTTPStatus.BAD_REQUEST)
+        raise InvalidAPIUsage(
+            ERROR_MISSING_BODY,
+            HTTPStatus.BAD_REQUEST
+        )
     if 'url' not in data:
-        raise InvalidAPIUsage(ERROR_MISSING_URL_FIELD, HTTPStatus.BAD_REQUEST)
+        raise InvalidAPIUsage(
+            ERROR_MISSING_URL_FIELD,
+            HTTPStatus.BAD_REQUEST
+        )
 
     custom_id = data.get('custom_id')
     if custom_id:
         if len(custom_id) > MAX_SHORT_ID_LENGTH:
-            raise InvalidAPIUsage(ERROR_INVALID_SHORT_ID, HTTPStatus.BAD_REQUEST)
+            raise InvalidAPIUsage(
+                ERROR_INVALID_SHORT_ID,
+                HTTPStatus.BAD_REQUEST
+            )
         if not re.match(SHORT_ID_PATTERN, custom_id):
-            raise InvalidAPIUsage(ERROR_INVALID_SHORT_ID, HTTPStatus.BAD_REQUEST)
+            raise InvalidAPIUsage(
+                ERROR_INVALID_SHORT_ID,
+                HTTPStatus.BAD_REQUEST
+            )
         if URLMap.query.filter_by(short=custom_id).first() is not None:
-            raise InvalidAPIUsage(ERROR_SHORT_ID_EXISTS, HTTPStatus.BAD_REQUEST)
+            raise InvalidAPIUsage(
+                ERROR_SHORT_ID_EXISTS,
+                HTTPStatus.BAD_REQUEST
+            )
     else:
         custom_id = generate_random_string()
 

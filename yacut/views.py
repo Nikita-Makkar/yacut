@@ -7,6 +7,7 @@ from .forms import URLForm
 from .models import URLMap
 from .utils import generate_random_string
 
+
 @app.route('/', methods=['GET', 'POST'])
 def index_view():
     form = URLForm()
