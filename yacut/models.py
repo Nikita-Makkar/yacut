@@ -19,6 +19,5 @@ class URLMap(db.Model):
         }
 
     def from_dict(self, data):
-        for field in ['original', 'short']:
-            if field in data:
-                setattr(self, field, data[field])
+        self.original = data.get('original', self.original)
+        self.short = data.get('short', self.short)

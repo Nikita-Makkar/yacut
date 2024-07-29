@@ -2,10 +2,8 @@ import re
 
 from wtforms.validators import ValidationError
 
-from yacut.constants import (ERROR_SHORT_ID_LENGTH,
-                             SHORT_ID_PATTERN,
-                             ERROR_CHARACTERS
-                             )
+from yacut.constants import (ERROR_CHARACTERS, ERROR_SHORT_ID_LENGTH,
+                             SHORT_ID_PATTERN)
 
 
 def validate_short_url(form, field):
