@@ -58,4 +58,4 @@ def add_url():
     url = URLMap(original=data['url'], short=custom_id)
     db.session.add(url)
     db.session.commit()
-    return jsonify(url.to_dict()), 201
+    return jsonify(url.to_dict()), HTTPStatus.CREATED

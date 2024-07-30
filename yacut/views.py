@@ -13,27 +13,32 @@ def index_view():
     form = URLForm()
     generated_short_url = None
 
-    if form.validate_on_submit():
-        original_url = form.original_link.data
-        custom_id = form.custom_id.data
+    if not form.validate_on_submit():
+        return render_template(
+            'index.html',
+            form=form,
+            generated_short_url=generated_short_url)
 
-        if custom_id and URLMap.query.filter_by(short=custom_id).first():
-            flash(ERROR_SHORT_ID_EXISTS)
-            return render_template(
-                'index.html',
-                form=form,
-                generated_short_url=generated_short_url)
+    original_url = form.original_link.data
+    custom_id = form.custom_id.data
 
-        if not custom_id:
+    if custom_id and URLMap.query.filter_by(short=custom_id).first():
+        flash(ERROR_SHORT_ID_EXISTS)
+        return render_template(
+            'index.html',
+            form=form,
+            generated_short_url=generated_short_url)
+
+    if not custom_id:
+        custom_id = generate_random_string()
+        while URLMap.query.filter_by(short=custom_id).first():
             custom_id = generate_random_string()
-            while URLMap.query.filter_by(short=custom_id).first():
-                custom_id = generate_random_string()
 
-        url_map = URLMap(original=original_url, short=custom_id)
-        db.session.add(url_map)
-        db.session.commit()
+    url_map = URLMap(original=original_url, short=custom_id)
+    db.session.add(url_map)
+    db.session.commit()
 
-        generated_short_url = custom_id
+    generated_short_url = custom_id
 
     return render_template(
         'index.html',
